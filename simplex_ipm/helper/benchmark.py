@@ -14,7 +14,7 @@ import scipy.sparse as sp
 import time
 
 from simplex_ipm.solver import IPM
-from simplex_ipm.baseline_solvers import solve_baseline_cvxpy, solve_baseline_scipy
+from simplex_ipm.helper.baseline_solvers import solve_baseline_cvxpy, solve_baseline_scipy
 
 
 # ---------------------------------------------------------------------------
@@ -97,9 +97,9 @@ def _time_solver(solver_func, Q, q, blocks):
                     converged=False, x=None, error=str(exc))
 
 
-def run_benchmark(Q, q, blocks, ipm_cfg=None):
+def run_benchmark(Q, q, blocks, ipm_cfg=None, run_scipy=True):
     """
-    Run CVXPY, SciPy, and IPM on one problem.
+    Run CVXPY and IPM on one problem, optionally SciPy.
 
     Returns (cvxpy_result, scipy_result, ipm_result) dicts with keys
     time, obj, converged, iter (IPM only), x.
@@ -108,7 +108,8 @@ def run_benchmark(Q, q, blocks, ipm_cfg=None):
         return IPM(Q, q, blocks, cfg=ipm_cfg).solve()
 
     cvxpy_out = _time_solver(solve_baseline_cvxpy, Q, q, blocks)
-    scipy_out = _time_solver(solve_baseline_scipy, Q, q, blocks)
+    scipy_out = (_time_solver(solve_baseline_scipy, Q, q, blocks)
+                 if run_scipy else None)
     ipm_out   = _time_solver(solve_ipm, Q, q, blocks)
     return cvxpy_out, scipy_out, ipm_out
 
