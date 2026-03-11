@@ -226,8 +226,7 @@ class IPM:
             dz = (self.Q.dot(dx) if self.is_sparse else self.Q @ dx) + Etdy + r_D
 
             # ---- step sizes ----
-            # Separate primal/dual step sizes are computed for logging;
-            # the update uses the conservative min(α_p, α_d).
+            # Separate primal/dual step sizes are computed for logging but the update uses the conservative min(α_p, α_d)
             a_p, a_d, alpha = self._step_sizes(x, dx, z, dz, cfg['gamma'])
 
             # ---- update (single step length) ----
@@ -245,7 +244,7 @@ class IPM:
                       f"{a_p:7.4f} {a_d:7.4f}")
 
         else:
-            # did NOT break → did not converge
+            # did NOT break = did not converge
             if verb >= 1:
                 print(f"Did not converge in {cfg['max_iter']} iterations  μ={mu:.2e}")
 
