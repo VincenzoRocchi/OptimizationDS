@@ -3,10 +3,10 @@ Benchmark: compare the IPM solver against CVXPY (OSQP) on random QPs.
 
 Provides
 --------
-  create_example_problem  – random QP on a product of simplices
-  generate_benchmark_suite – systematic grid of test configs
-  run_benchmark           – time CVXPY + IPM on one instance
-  run_suite               – run the full grid + print summary
+  create_example_problem    random QP on a product of simplices
+  generate_benchmark_suite  systematic grid of test configs
+  run_benchmark             time CVXPY + IPM on one instance
+  run_suite                 run the full grid + print summary
 """
 
 import numpy as np
@@ -136,11 +136,12 @@ def run_suite(seed=42, verbosity=0, **ipm_overrides):
 
         Q, q, blocks = create_example_problem(
             n=n, n_blocks=K, seed=cfg['seed'], density=density)
-        cv, _scipy, ipm = run_benchmark(Q, q, blocks, ipm_cfg=ipm_cfg)
+        cv, _scipy, ipm = run_benchmark(Q, q, blocks, ipm_cfg=ipm_cfg,
+                                        run_scipy=False)
 
         # ratio convention: >=1 with arrow
-        if cv['time'] > 0 and ipm['time'] > 0:
-            r = cv['time'] / ipm['time']
+        if cv['time'] > 0 and ipm['time'] > 0: #type: ignore
+            r = cv['time'] / ipm['time'] #type: ignore
             ratio_s = (f"{r:.2f}x \u2191" if r >= 1
                        else f"{1/r:.2f}x \u2193")
         else:
@@ -148,7 +149,7 @@ def run_suite(seed=42, verbosity=0, **ipm_overrides):
 
         obj_rel = ""
         if cv['converged'] and ipm['converged']:
-            rel = abs(cv['obj'] - ipm['obj']) / max(abs(cv['obj']), 1e-15)
+            rel = abs(cv['obj'] - ipm['obj']) / max(abs(cv['obj']), 1e-15) #type: ignore
             obj_rel = f"{rel:.2e}"
 
         rows.append((name, n, K, density,

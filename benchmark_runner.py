@@ -44,8 +44,8 @@ def main():
     print(f"IPM:    {ipm['time']:.4f}s  obj={ipm['obj']:.10e}  "
           f"iter={ipm.get('iter','-')}")
     if cv['converged'] and ipm['converged']:
-        rel = abs(cv['obj'] - ipm['obj']) / max(abs(cv['obj']), 1e-15)
-        ratio = cv['time'] / max(ipm['time'], 1e-15)
+        rel = abs(cv['obj'] - ipm['obj']) / max(abs(cv['obj']), 1e-15) #type: ignore
+        ratio = cv['time'] / max(ipm['time'], 1e-15) #type: ignore
         arrow = '\u2191' if ratio >= 1 else '\u2193'
         factor = ratio if ratio >= 1 else 1/ratio
         print(f"Obj rel err: {rel:.2e}  |  "
