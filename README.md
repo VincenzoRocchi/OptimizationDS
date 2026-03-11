@@ -17,16 +17,13 @@ s.t. Ex = 1,  x >= 0
 
 ```
 simplex_ipm/
+  __init__.py            # Exports IPM
   solver.py              # IPM — H formulation, sparse E, Cholesky
-  baseline_solvers.py    # CVXPY (OSQP) reference solver
   helper/
+    __init__.py
+    baseline_solvers.py  # CVXPY (OSQP) and SciPy reference solvers
     benchmark.py         # Benchmark suite, problem generator, timing
-    utils.py             # norm_inf helper
 benchmark_runner.py      # CLI entrypoint (single problem or full suite)
-test_convergence.py      # Quick convergence check across all configs
-simplified.tex           # Report (theory + experiments)
-explanation/             # Detailed markdown explanations
-changes/                 # Changelog
 ```
 
 ## Solver
@@ -90,8 +87,6 @@ uv run benchmark_runner.py --suite --seed 42
 uv run benchmark_runner.py --n 500 --n-blocks 50
 uv run benchmark_runner.py --n 1000 --n-blocks 100 --density 0.1
 
-# Quick convergence check
-uv run test_convergence.py
 ```
 
 **CLI flags:**
@@ -102,11 +97,9 @@ uv run test_convergence.py
 | `--n-blocks` | 3 | Number of simplex blocks |
 | `--density` | 1.0 | Q matrix density (1.0=dense, <1.0=sparse) |
 | `--seed` | 42 | Random seed |
-| `--sigma` | 0.1 | Centering parameter |
-| `--max-iter` | 200 | Max iterations |
 | `--verbosity` | 0 | Verbosity level |
-| `--debug` | off | Print detailed solution statistics |
 | `--suite` | off | Run full benchmark suite |
+| `--no-scipy` | off | Skip SciPy baseline in single-instance mode |
 
 ### Suite Axes
 
