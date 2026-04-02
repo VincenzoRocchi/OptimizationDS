@@ -1,5 +1,5 @@
 """
-CLI entrypoint - all logic lives in simplex_ipm.helper.benchmark.
+CLI entrypoint - all logic lives in simplex_ipm.helper.benchmark
 """
 
 import argparse

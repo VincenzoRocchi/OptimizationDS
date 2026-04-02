@@ -6,10 +6,8 @@ from simplex_ipm.solver import IPM
 from simplex_ipm.helper.baseline_solvers import solve_baseline_cvxpy, solve_baseline_scipy
 
 
-# ---------------------------------------------------------------------------
-# Problem generation
-# ---------------------------------------------------------------------------
 
+# Problem generation
 def create_example_problem(n=10, n_blocks=3, seed=42, density=1.0):
     """Return (Q, q, blocks) for a random QP on a product of simplices."""
     rng = np.random.default_rng(seed)
@@ -36,10 +34,8 @@ def compute_objective(Q, q, x):
     return 0.5 * np.dot(x, Qx) + np.dot(q, x)
 
 
-# ---------------------------------------------------------------------------
-# Suite generator
-# ---------------------------------------------------------------------------
 
+# Suite generator
 def generate_benchmark_suite(seed=42):
     """
     Build the systematic grid of test configurations.
@@ -68,10 +64,8 @@ def generate_benchmark_suite(seed=42):
     return suite
 
 
-# ---------------------------------------------------------------------------
-# Single-instance benchmark
-# ---------------------------------------------------------------------------
 
+# Single-instance benchmark
 def _time_solver(solver_func, Q, q, blocks):
     """Run a solver, return dict with time/obj/converged/x."""
     try:
@@ -90,7 +84,7 @@ def _time_solver(solver_func, Q, q, blocks):
 
 def run_benchmark(Q, q, blocks, ipm_cfg=None, run_scipy=True):
     """ 
-    un CVXPY and IPM on one problem, optionally SciPy.
+    un CVXPY and IPM on one problem, optionally SciPy (usually too slow).
     """
     def solve_ipm(Q, q, blocks):
         return IPM(Q, q, blocks, cfg=ipm_cfg).solve()
@@ -102,10 +96,8 @@ def run_benchmark(Q, q, blocks, ipm_cfg=None, run_scipy=True):
     return cvxpy_out, scipy_out, ipm_out
 
 
-# ---------------------------------------------------------------------------
-# Suite runner
-# ---------------------------------------------------------------------------
 
+# Suite runner
 def run_suite(seed=42, verbosity=0, **ipm_overrides):
     """
     Run the full benchmark grid and print a compact summary.
