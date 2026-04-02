@@ -17,7 +17,7 @@ def solve_baseline_cvxpy(Q, q, blocks):
     x = cp.Variable(n, nonneg=True)
     constraints = [cp.sum(x[blk]) == 1.0 for blk in blocks]
     objective = cp.Minimize(0.5 * cp.quad_form(x, cp.psd_wrap(Q)) + q @ x)
-    problem = cp.Problem(objective, constraints)
+    problem = cp.Problem(objective, constraints) #type: ignore
 
     problem.solve(solver=cp.OSQP, verbose=False)
     if problem.status not in ('optimal', 'optimal_inaccurate'):
