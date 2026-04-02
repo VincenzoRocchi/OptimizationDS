@@ -178,6 +178,12 @@ class IPM:
             x_inv_z = z / x_safe
             tau = cfg['tau_reg']
 
+            r"""
+            (\(\
+            ( -.-)   Buona Pasqua!   (-.-)
+            o_(")(")
+            """
+
             if self.is_sparse:
                 H = self.Q + sp.diags(x_inv_z, format='csc')
                 if tau > 0:

@@ -49,7 +49,7 @@ Single-class solver. Uses the symmetric **H = Q + X⁻¹Z** formulation with:
 | `tau_delta` | 1e-2 | δ scaling factor for range-based rule |
 | `tau_reg` | 1e-8 | Fixed regularisation of H |
 | `gamma` | 0.99 | Fraction-to-boundary safety factor |
-| `verbosity` | 1 | 0=silent, 1=summary, 2=per-iteration |
+| `verbosity` | 1 | 0=silent, 1=summary, 2=per-iteration. Direct `IPM` uses 1 by default; the benchmark CLI uses 0. |
 
 ### Reference Solver (`baseline_solvers.py`)
 
@@ -115,5 +115,5 @@ uv run benchmark_runner.py --n 1000 --n-blocks 100 --density 0.1
 - cvxpy (baseline comparison)
 
 ```bash
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
